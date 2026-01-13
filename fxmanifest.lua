@@ -24,24 +24,12 @@ shared_scripts {
     'shared/jobs.lua'
 }
 
--- Locale and NUI files
+-- Locale files
 files {
     'locales/en.lua',
     'locales/pt-br.lua',
-    'locales/es.lua',
-    'nui/character/index.html',
-    'nui/character/style.css',
-    'nui/character/script.js',
-    'nui/hud/index.html',
-    'nui/hud/style.css',
-    'nui/hud/script.js',
-    'nui/inventory/index.html',
-    'nui/inventory/style.css',
-    'nui/inventory/script.js'
+    'locales/es.lua'
 }
-
--- NUI pages
-ui_page 'nui/character/index.html'
 
 -- Client scripts
 client_scripts {
@@ -50,11 +38,7 @@ client_scripts {
     'client/events.lua',
     'client/modules/utils.lua',
     'client/modules/animations.lua',
-    'client/modules/player.lua',
-    'client/modules/nui.lua',
-    'client/modules/hud.lua',
-    'client/modules/needs.lua',
-    'client/modules/inventory.lua'
+    'client/modules/player.lua'
 }
 
 -- Server scripts
@@ -68,22 +52,25 @@ server_scripts {
     'server/modules/database.lua',
     'server/modules/player.lua',
     'server/modules/economy.lua',
-    'server/modules/spawner.lua',
-    'server/modules/needs.lua',
-    'server/modules/inventory.lua'
+    'server/modules/spawner.lua'
 }
 
 -- Exports
 exports {
-    -- Client exports
     'GetPlayerData',
-    'GetCoreObject'
+    'GetCoreObject',
+    'IsLoggedIn',
+    'Notify',
+    'TriggerCallback'
 }
 
 server_exports {
-    -- Server exports
     'GetCoreObject',
     'GetPlayer',
     'GetPlayers',
-    'CreatePlayer'
+    'CreatePlayer',
+    'GetPlayerByCitizenId',
+    'CreateCallback',
+    'AddMoney',
+    'RemoveMoney'
 }
