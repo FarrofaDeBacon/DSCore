@@ -34,7 +34,10 @@ files {
     'nui/character/script.js',
     'nui/hud/index.html',
     'nui/hud/style.css',
-    'nui/hud/script.js'
+    'nui/hud/script.js',
+    'nui/inventory/index.html',
+    'nui/inventory/style.css',
+    'nui/inventory/script.js'
 }
 
 -- NUI pages
@@ -49,7 +52,9 @@ client_scripts {
     'client/modules/animations.lua',
     'client/modules/player.lua',
     'client/modules/nui.lua',
-    'client/modules/hud.lua'
+    'client/modules/hud.lua',
+    'client/modules/needs.lua',
+    'client/modules/inventory.lua'
 }
 
 -- Server scripts
@@ -63,7 +68,9 @@ server_scripts {
     'server/modules/database.lua',
     'server/modules/player.lua',
     'server/modules/economy.lua',
-    'server/modules/spawner.lua'
+    'server/modules/spawner.lua',
+    'server/modules/needs.lua',
+    'server/modules/inventory.lua'
 }
 
 -- Exports

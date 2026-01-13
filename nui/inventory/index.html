@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Sync - Inventory</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lora:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="inventory" class="hidden">
+        <!-- Background overlay -->
+        <div class="inv-overlay" onclick="closeInventory()"></div>
+
+        <div class="inv-container">
+            <!-- Header -->
+            <div class="inv-header">
+                <h2 class="inv-title">Inventory</h2>
+                <div class="inv-weight">
+                    <span id="current-weight">0</span>/<span id="max-weight">50</span> kg
+                </div>
+                <button class="inv-close" onclick="closeInventory()">✕</button>
+            </div>
+
+            <!-- Main Content -->
+            <div class="inv-content">
+                <!-- Player Inventory -->
+                <div class="inv-panel player-inv">
+                    <div class="panel-header">
+                        <h3>Your Items</h3>
+                        <span class="panel-info" id="player-slots">0/40</span>
+                    </div>
+                    <div class="inv-grid" id="player-grid">
+                        <!-- Slots will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Secondary Panel (Ground/Container/Shop) -->
+                <div class="inv-panel secondary-inv hidden" id="secondary-panel">
+                    <div class="panel-header">
+                        <h3 id="secondary-title">Ground</h3>
+                        <span class="panel-info" id="secondary-slots">0/20</span>
+                    </div>
+                    <div class="inv-grid" id="secondary-grid">
+                        <!-- Slots will be generated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item Info Tooltip -->
+            <div class="item-tooltip hidden" id="item-tooltip">
+                <div class="tooltip-header">
+                    <span class="tooltip-name" id="tooltip-name">Item Name</span>
+                    <span class="tooltip-weight" id="tooltip-weight">0.5 kg</span>
+                </div>
+                <p class="tooltip-desc" id="tooltip-desc">Item description here...</p>
+                <div class="tooltip-actions">
+                    <button class="tooltip-btn" onclick="useItem()">Use</button>
+                    <button class="tooltip-btn" onclick="dropItem()">Drop</button>
+                    <button class="tooltip-btn" onclick="giveItem()">Give</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
