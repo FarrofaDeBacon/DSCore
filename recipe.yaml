@@ -1,10 +1,10 @@
 $engine_version: 2
 $minFxServerVersion: 7290
 
-name: Double Sync Framework (Complete)
+name: Double Sync Framework
 version: 1.0.0
 author: Double Sync Team
-description: Complete RedM framework with multi-character, HUD, inventory, and needs systems.
+description: Complete RedM framework - All-in-one from DSCore repository
 
 variables:
   dbHost: localhost
@@ -16,40 +16,14 @@ variables:
 
 tasks:
   # ===================================
-  # Download all resources
+  # Download DSCore (contains everything)
   # ===================================
-  
-  # ds-core
   - action: download_github
-    src: https://github.com/FarrofaDeBacon/ds-core
+    src: https://github.com/FarrofaDeBacon/DSCore
     ref: main
     dest: ./resources/[ds]/ds-core
 
-  # ds-multichar
-  - action: download_github
-    src: https://github.com/FarrofaDeBacon/ds-multichar
-    ref: main
-    dest: ./resources/[ds]/ds-multichar
-
-  # ds-hud
-  - action: download_github
-    src: https://github.com/FarrofaDeBacon/ds-hud
-    ref: main
-    dest: ./resources/[ds]/ds-hud
-
-  # ds-inventory
-  - action: download_github
-    src: https://github.com/FarrofaDeBacon/ds-inventory
-    ref: main
-    dest: ./resources/[ds]/ds-inventory
-
-  # ds-needs
-  - action: download_github
-    src: https://github.com/FarrofaDeBacon/ds-needs
-    ref: main
-    dest: ./resources/[ds]/ds-needs
-
-  # oxmysql
+  # Download oxmysql
   - action: download_github
     src: https://github.com/overextended/oxmysql
     ref: master
@@ -60,18 +34,6 @@ tasks:
   # ===================================
   - action: remove_path
     path: ./resources/[ds]/ds-core/.git
-    
-  - action: remove_path
-    path: ./resources/[ds]/ds-multichar/.git
-
-  - action: remove_path
-    path: ./resources/[ds]/ds-hud/.git
-
-  - action: remove_path
-    path: ./resources/[ds]/ds-inventory/.git
-
-  - action: remove_path
-    path: ./resources/[ds]/ds-needs/.git
     
   - action: remove_path
     path: ./resources/[standalone]/oxmysql/.git
@@ -89,12 +51,15 @@ tasks:
       sv_hostname "Double Sync RP"
       sv_maxclients {{svMaxClients}}
       sets sv_projectName "Double Sync RP"
-      sets sv_projectDesc "A RedM Roleplay Server powered by Double Sync Framework"
+      sets sv_projectDesc "RedM Roleplay Server - Double Sync Framework"
       
+      # License Key (get from keymaster.fivem.net)
       sv_licenseKey "{{svLicense}}"
       
-      # Database
+      # Database Connection
       set mysql_connection_string "mysql://{{dbUsername}}:{{dbPassword}}@{{dbHost}}/{{dbName}}?charset=utf8mb4"
+      
+      # Locale
       setr ox:locale "en"
       
       # =====================================
@@ -104,14 +69,11 @@ tasks:
       # Dependencies
       ensure oxmysql
       
-      # Double Sync Framework
+      # Double Sync Framework (All-in-One)
       ensure ds-core
-      ensure ds-multichar
-      ensure ds-hud
-      ensure ds-inventory
-      ensure ds-needs
       
-      # Add your additional resources below
+      # Add your resources below
+      # ensure your-resource
 
   # ===================================
   # Database Setup
@@ -151,8 +113,7 @@ tasks:
           `citizenid` VARCHAR(50),
           `message` TEXT,
           `data` JSON,
-          `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-          INDEX `idx_type` (`type`)
+          `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
   - action: query_database
@@ -179,26 +140,25 @@ tasks:
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
   # ===================================
-  # Done
+  # Done!
   # ===================================
   - action: waste_time
     seconds: 2
 
   - action: notify
     message: |
-      ✅ Double Sync Framework installed successfully!
+      ✅ Double Sync Framework instalado com sucesso!
       
-      Resources installed:
-      - ds-core (Core framework)
-      - ds-multichar (Character selection)
-      - ds-hud (HUD system)
-      - ds-inventory (Inventory system)
-      - ds-needs (Hunger/Thirst system)
+      Próximos passos:
+      1. Adicione sua license key no server.cfg
+      2. Configure a senha do banco de dados
+      3. Inicie o servidor
+      4. Conecte e use /charselect
       
-      Next Steps:
-      1. Add your Cfx.re license key to server.cfg
-      2. Configure database password
-      3. Start your server
-      4. Connect and use /charselect
+      Comandos:
+      - /charselect - Selecionar personagem
+      - /showhud - Mostrar HUD
+      - /giveitem [id] [item] [qty] - Dar item
+      - /feed [id] - Alimentar jogador
       
-      GitHub: https://github.com/FarrofaDeBacon
+      GitHub: https://github.com/FarrofaDeBacon/DSCore
