@@ -1,0 +1,298 @@
+/* ===========================================
+   Double Sync - HUD Styles
+   Modern Western Theme
+=========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #c9a54d;
+    --health: #c44141;
+    --health-dark: #8a2e2e;
+    --hunger: #d4853a;
+    --hunger-dark: #9a5f28;
+    --thirst: #4a90c9;
+    --thirst-dark: #356890;
+    --stamina: #5cb85c;
+    --stamina-dark: #3d8a3d;
+    --bg-dark: rgba(15, 12, 8, 0.85);
+    --bg-card: rgba(30, 25, 18, 0.9);
+    --text-light: #f4e8d3;
+    --text-muted: #a89880;
+    --gold: #ffd700;
+}
+
+body {
+    font-family: 'Lora', serif;
+    background: transparent;
+    color: var(--text-light);
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#hud {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* ===========================================
+   Money Display (Top Right)
+=========================================== */
+.money-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.money-item {
+    background: var(--bg-card);
+    border: 1px solid rgba(201, 165, 77, 0.2);
+    border-radius: 8px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 120px;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.money-item.gold {
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.money-item.updated {
+    transform: scale(1.05);
+    border-color: var(--primary);
+}
+
+.money-icon {
+    font-size: 1.2rem;
+}
+
+.money-value {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+.money-item.gold .money-value {
+    color: var(--gold);
+}
+
+/* ===========================================
+   Status Bars (Bottom Left)
+=========================================== */
+.status-container {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.status-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.status-bar:hover {
+    opacity: 1;
+}
+
+.status-icon {
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+}
+
+.status-track {
+    width: 120px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.status-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease, background 0.3s ease;
+}
+
+.health-fill {
+    background: linear-gradient(90deg, var(--health-dark), var(--health));
+}
+
+.hunger-fill {
+    background: linear-gradient(90deg, var(--hunger-dark), var(--hunger));
+}
+
+.thirst-fill {
+    background: linear-gradient(90deg, var(--thirst-dark), var(--thirst));
+}
+
+.stamina-fill {
+    background: linear-gradient(90deg, var(--stamina-dark), var(--stamina));
+}
+
+.status-value {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    width: 30px;
+}
+
+/* Low status warning */
+.status-bar.low .status-fill {
+    animation: pulse 1s infinite;
+}
+
+.status-bar.critical .status-fill {
+    animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* ===========================================
+   Player Info (Bottom Center)
+=========================================== */
+.player-info {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0.85;
+}
+
+.player-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 5px;
+}
+
+.player-job {
+    display: flex;
+    justify-content: center;
+}
+
+.job-badge {
+    background: rgba(201, 165, 77, 0.2);
+    border: 1px solid rgba(201, 165, 77, 0.3);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ===========================================
+   Notifications
+=========================================== */
+.notifications {
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 350px;
+}
+
+.notification {
+    background: var(--bg-card);
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    padding: 12px 16px;
+    backdrop-filter: blur(5px);
+    animation: slideIn 0.3s ease, fadeOut 0.3s ease forwards;
+    animation-delay: 0s, 4.7s;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.notification.success {
+    border-left-color: var(--stamina);
+}
+
+.notification.error {
+    border-left-color: var(--health);
+}
+
+.notification.warning {
+    border-left-color: var(--hunger);
+}
+
+.notification.info {
+    border-left-color: var(--thirst);
+}
+
+.notification-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+/* ===========================================
+   Responsive
+=========================================== */
+@media (max-width: 1280px) {
+    .status-track {
+        width: 100px;
+    }
+}

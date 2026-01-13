@@ -1,0 +1,44 @@
+# Git ignore for Double Sync Framework
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+*.cache
+
+# Build
+dist/
+build/
+
+# Dependencies (managed separately)
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Temporary
+tmp/
+temp/
+*.tmp
+
+# Backups
+*.bak
+*.backup
+
+# Agent files
+.agent/

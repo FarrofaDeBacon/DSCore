@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Sync - Character Selection</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app" class="hidden">
+        <!-- Background overlay -->
+        <div class="bg-overlay"></div>
+        
+        <!-- Main container -->
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <h1 class="title">DOUBLE SYNC</h1>
+                <p class="subtitle">Choose Your Destiny</p>
+            </div>
+
+            <!-- Character Selection Screen -->
+            <div id="character-select" class="screen active">
+                <div class="characters-grid" id="characters-container">
+                    <!-- Characters will be injected here -->
+                </div>
+                
+                <div class="slot-info" id="slot-info">
+                    <span id="slot-count">0/3</span> Characters
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-primary" id="btn-create" onclick="showCreateScreen()">
+                        <span class="btn-icon">+</span>
+                        Create New Character
+                    </button>
+                    <button class="btn btn-secondary" id="btn-play" onclick="playCharacter()" disabled>
+                        <span class="btn-icon">▶</span>
+                        Play
+                    </button>
+                    <button class="btn btn-danger" id="btn-delete" onclick="confirmDelete()" disabled>
+                        <span class="btn-icon">✕</span>
+                        Delete
+                    </button>
+                </div>
+            </div>
+
+            <!-- Character Creation Screen -->
+            <div id="character-create" class="screen">
+                <div class="create-container">
+                    <h2 class="create-title">Create Your Character</h2>
+                    
+                    <form id="create-form" onsubmit="createCharacter(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstname">First Name</label>
+                                <input type="text" id="firstname" name="firstname" required 
+                                       placeholder="John" maxlength="20">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastname">Last Name</label>
+                                <input type="text" id="lastname" name="lastname" required 
+                                       placeholder="Smith" maxlength="20">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="birthdate">Birth Date</label>
+                                <input type="date" id="birthdate" name="birthdate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="">Select...</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nationality">Nationality</label>
+                                <input type="text" id="nationality" name="nationality" 
+                                       placeholder="American" maxlength="30">
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="backstory">Backstory (Optional)</label>
+                            <textarea id="backstory" name="backstory" rows="3" 
+                                      placeholder="Tell us about your character's past..." 
+                                      maxlength="500"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="showSelectScreen()">
+                                Back
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                Create Character
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Delete Confirmation Modal -->
+            <div id="delete-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h3>Delete Character</h3>
+                    <p>Are you sure you want to delete <strong id="delete-name"></strong>?</p>
+                    <p class="warning">This action cannot be undone!</p>
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                        <button class="btn btn-danger" onclick="deleteCharacter()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

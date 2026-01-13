@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Sync - HUD</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lora:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="hud" class="hidden">
+        <!-- Money Display (Top Right) -->
+        <div class="money-container">
+            <div class="money-item" id="money-cash">
+                <span class="money-icon">💵</span>
+                <span class="money-value">$0</span>
+            </div>
+            <div class="money-item" id="money-bank">
+                <span class="money-icon">🏦</span>
+                <span class="money-value">$0</span>
+            </div>
+            <div class="money-item gold" id="money-gold">
+                <span class="money-icon">🪙</span>
+                <span class="money-value">0</span>
+            </div>
+        </div>
+
+        <!-- Status Bars (Bottom Left) -->
+        <div class="status-container">
+            <!-- Health -->
+            <div class="status-bar" id="status-health">
+                <div class="status-icon">❤️</div>
+                <div class="status-track">
+                    <div class="status-fill health-fill" style="width: 100%"></div>
+                </div>
+                <div class="status-value">100</div>
+            </div>
+
+            <!-- Hunger -->
+            <div class="status-bar" id="status-hunger">
+                <div class="status-icon">🍖</div>
+                <div class="status-track">
+                    <div class="status-fill hunger-fill" style="width: 100%"></div>
+                </div>
+                <div class="status-value">100</div>
+            </div>
+
+            <!-- Thirst -->
+            <div class="status-bar" id="status-thirst">
+                <div class="status-icon">💧</div>
+                <div class="status-track">
+                    <div class="status-fill thirst-fill" style="width: 100%"></div>
+                </div>
+                <div class="status-value">100</div>
+            </div>
+
+            <!-- Stamina -->
+            <div class="status-bar" id="status-stamina">
+                <div class="status-icon">⚡</div>
+                <div class="status-track">
+                    <div class="status-fill stamina-fill" style="width: 100%"></div>
+                </div>
+                <div class="status-value">100</div>
+            </div>
+        </div>
+
+        <!-- Player Info (Bottom Center) -->
+        <div class="player-info">
+            <div class="player-name" id="player-name">John Smith</div>
+            <div class="player-job" id="player-job">
+                <span class="job-badge">Unemployed</span>
+            </div>
+        </div>
+
+        <!-- Notification Area -->
+        <div class="notifications" id="notifications"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
