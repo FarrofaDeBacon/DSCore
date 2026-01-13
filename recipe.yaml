@@ -4,7 +4,7 @@ $minFxServerVersion: 7290
 name: Double Sync Framework
 version: 1.0.0
 author: Double Sync Team
-description: Complete RedM framework - All-in-one from DSCore repository
+description: Complete RedM framework - Multi-character, HUD, Inventory, Needs
 
 variables:
   dbHost: localhost
@@ -15,150 +15,94 @@ variables:
   svMaxClients: 32
 
 tasks:
-  # ===================================
-  # Download DSCore (contains everything)
-  # ===================================
   - action: download_github
     src: https://github.com/FarrofaDeBacon/DSCore
     ref: main
     dest: ./resources/[ds]/ds-core
 
-  # Download oxmysql
   - action: download_github
     src: https://github.com/overextended/oxmysql
     ref: master
     dest: ./resources/[standalone]/oxmysql
 
-  # ===================================
-  # Cleanup
-  # ===================================
   - action: remove_path
     path: ./resources/[ds]/ds-core/.git
     
   - action: remove_path
     path: ./resources/[standalone]/oxmysql/.git
 
-  # ===================================
-  # Server Configuration
-  # ===================================
   - action: write_file
     path: ./server.cfg
     file: |
-      # =====================================
-      # Double Sync Framework - Server Config
-      # =====================================
-      
-      sv_hostname "Double Sync RP"
-      sv_maxclients {{svMaxClients}}
-      sets sv_projectName "Double Sync RP"
-      sets sv_projectDesc "RedM Roleplay Server - Double Sync Framework"
-      
-      # License Key (get from keymaster.fivem.net)
-      sv_licenseKey "{{svLicense}}"
-      
-      # Database Connection
-      set mysql_connection_string "mysql://{{dbUsername}}:{{dbPassword}}@{{dbHost}}/{{dbName}}?charset=utf8mb4"
-      
-      # Locale
-      setr ox:locale "en"
-      
-      # =====================================
-      # Resources
-      # =====================================
-      
-      # Dependencies
-      ensure oxmysql
-      
-      # Double Sync Framework (All-in-One)
-      ensure ds-core
-      
-      # Add your resources below
-      # ensure your-resource
+        sv_hostname "Double Sync RP"
+        sv_maxclients {{svMaxClients}}
+        sets sv_projectName "Double Sync RP"
+        sets sv_projectDesc "RedM Roleplay Server"
+        sv_licenseKey "{{svLicense}}"
+        set mysql_connection_string "mysql://{{dbUsername}}:{{dbPassword}}@{{dbHost}}/{{dbName}}?charset=utf8mb4"
+        setr ox:locale "en"
+        ensure oxmysql
+        ensure ds-core
 
-  # ===================================
-  # Database Setup
-  # ===================================
   - action: query_database
-    query: |
-      CREATE DATABASE IF NOT EXISTS `{{dbName}}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    query: CREATE DATABASE IF NOT EXISTS {{dbName}} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 
   - action: connect_database
     database: "{{dbName}}"
 
   - action: query_database
     query: |
-      CREATE TABLE IF NOT EXISTS `ds_players` (
-          `id` INT AUTO_INCREMENT PRIMARY KEY,
-          `citizenid` VARCHAR(50) NOT NULL UNIQUE,
-          `license` VARCHAR(100) NOT NULL,
-          `name` VARCHAR(100),
-          `charinfo` JSON DEFAULT '{}',
-          `money` JSON DEFAULT '{"cash":100,"bank":500,"gold":0}',
-          `job` JSON DEFAULT '{"name":"unemployed","label":"Unemployed","grade":0}',
-          `gang` JSON DEFAULT '{"name":"none","label":"None","grade":0}',
-          `position` JSON DEFAULT NULL,
-          `metadata` JSON DEFAULT '{"hunger":100,"thirst":100,"stamina":100,"isdead":false}',
-          `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-          `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-          INDEX `idx_license` (`license`),
-          INDEX `idx_citizenid` (`citizenid`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        CREATE TABLE IF NOT EXISTS ds_players (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            citizenid VARCHAR(50) NOT NULL UNIQUE,
+            license VARCHAR(100) NOT NULL,
+            name VARCHAR(100),
+            charinfo JSON DEFAULT NULL,
+            money JSON DEFAULT NULL,
+            job JSON DEFAULT NULL,
+            gang JSON DEFAULT NULL,
+            position JSON DEFAULT NULL,
+            metadata JSON DEFAULT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 
   - action: query_database
     query: |
-      CREATE TABLE IF NOT EXISTS `ds_logs` (
-          `id` INT AUTO_INCREMENT PRIMARY KEY,
-          `type` VARCHAR(50) NOT NULL,
-          `source` INT,
-          `citizenid` VARCHAR(50),
-          `message` TEXT,
-          `data` JSON,
-          `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        CREATE TABLE IF NOT EXISTS ds_logs (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            type VARCHAR(50) NOT NULL,
+            source INT,
+            citizenid VARCHAR(50),
+            message TEXT,
+            data JSON,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 
   - action: query_database
     query: |
-      CREATE TABLE IF NOT EXISTS `ds_bans` (
-          `id` INT AUTO_INCREMENT PRIMARY KEY,
-          `license` VARCHAR(100) NOT NULL,
-          `discord` VARCHAR(50),
-          `reason` TEXT,
-          `banned_by` VARCHAR(100),
-          `expire_at` TIMESTAMP NULL,
-          `permanent` BOOLEAN DEFAULT FALSE,
-          `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        CREATE TABLE IF NOT EXISTS ds_bans (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            license VARCHAR(100) NOT NULL,
+            discord VARCHAR(50),
+            reason TEXT,
+            banned_by VARCHAR(100),
+            expire_at TIMESTAMP NULL,
+            permanent BOOLEAN DEFAULT FALSE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 
   - action: query_database
     query: |
-      CREATE TABLE IF NOT EXISTS `ds_inventory` (
-          `id` INT AUTO_INCREMENT PRIMARY KEY,
-          `citizenid` VARCHAR(50) NOT NULL,
-          `items` JSON DEFAULT '[]',
-          `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-          INDEX `idx_citizenid` (`citizenid`)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        CREATE TABLE IF NOT EXISTS ds_inventory (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            citizenid VARCHAR(50) NOT NULL,
+            items JSON DEFAULT NULL,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 
-  # ===================================
-  # Done!
-  # ===================================
   - action: waste_time
     seconds: 2
 
   - action: notify
-    message: |
-      ✅ Double Sync Framework instalado com sucesso!
-      
-      Próximos passos:
-      1. Adicione sua license key no server.cfg
-      2. Configure a senha do banco de dados
-      3. Inicie o servidor
-      4. Conecte e use /charselect
-      
-      Comandos:
-      - /charselect - Selecionar personagem
-      - /showhud - Mostrar HUD
-      - /giveitem [id] [item] [qty] - Dar item
-      - /feed [id] - Alimentar jogador
-      
-      GitHub: https://github.com/FarrofaDeBacon/DSCore
+    message: Double Sync Framework instalado! Configure sua license key no server.cfg
